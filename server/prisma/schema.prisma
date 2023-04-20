@@ -8,8 +8,30 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  name     String
-  password String
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  name        String
+  password    String
+  spending    Item[]
+  transitions Trans[]
+}
+
+model Trans {
+  id     Int    @id @default(autoincrement())
+  type   String
+  from   String
+  to     String
+  amount Int
+  time   String
+  User   User?  @relation(fields: [userId], references: [id])
+  userId Int?
+}
+
+model Item {
+  id     Int    @id @default(autoincrement())
+  name   String
+  amount Int
+  time   String
+  User   User?  @relation(fields: [userId], references: [id])
+  userId Int?
 }

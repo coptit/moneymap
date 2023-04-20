@@ -6,8 +6,7 @@ import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import cors from "cors";
 import { z } from "zod";
 import sendMail, { mailMeta } from "./sendMail";
-import express, { Request, Response } from "express";
-import { login, signup, User } from "./prisma";
+import { login, signup, User, addSpending, addTransitions } from "./prisma";
 
 const t = initTRPC.create();
 
@@ -94,6 +93,50 @@ const appRouter = router({
         };
       }
     }),
+  addSpending: publicProcedure
+    .input(
+      z.object({
+        email: z.string().nonempty(),
+        name: z.string().nonempty(),
+        time: z.string().nonempty(),
+        amount: z.number(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const res = await addSpending(
+        input.email,
+        input.name,
+        input.amount,
+        input.time
+      );
+      return {
+        res,
+      };
+    }),
+  addTrans: publicProcedure
+    .input(
+      z.object({
+        email: z.string().nonempty(),
+        type: z.string().nonempty(),
+        from: z.string().nonempty(),
+        to: z.string().nonempty(),
+        amount: z.number(),
+        time: z.string().nonempty(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const res = await addTransitions(
+        input.email,
+        input.type,
+        input.from,
+        input.to,
+        input.amount,
+        input.time
+      );
+      return {
+        res,
+      };
+    }),
 });
 
 export type AppRouter = typeof appRouter;
@@ -108,41 +151,3 @@ createHTTPServer({
   },
 }).listen(4001);
 console.log("Started TRPC server at 4001");
-
-/*
-Server for REST API Endpoints
-*/
-
-const app = express();
-app.use(
-  cors({
-    origin: "*",
-  })
-);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.post("/api/sendmail", async (req: Request, res: Response) => {
-  const to = req.body.to;
-  const subject = req.body.subject;
-  const text = req.body.text;
-  const html = req.body.html;
-
-  const mailPayload: mailMeta = {
-    to,
-    subject,
-    text,
-    html,
-  };
-
-  const messageid = await sendMail(mailPayload);
-
-  res.status(200);
-  res.json({
-    messageid,
-  });
-});
-
-app.listen(4002, () => {
-  console.log("REST App listening at port 4002");
-});

@@ -66,3 +66,79 @@ export async function login(
   };
   return [userReturn, true];
 }
+
+export async function addSpending(
+  email: string,
+  name: string,
+  amount: number,
+  time: string
+) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user || user == undefined) {
+      return false;
+    }
+
+    await prisma.item.create({
+      data: {
+        name,
+        amount,
+        time,
+        User: {
+          connect: {
+            email: email,
+          },
+        },
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function addTransitions(
+  email: string,
+  type: string,
+  from: string,
+  to: string,
+  amount: number,
+  time: string
+) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user || user == undefined) {
+      return false;
+    }
+
+    await prisma.trans.create({
+      data: {
+        from,
+        to,
+        amount,
+        time,
+        type,
+        User: {
+          connect: {
+            email: email,
+          },
+        },
+      },
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
