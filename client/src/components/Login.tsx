@@ -66,7 +66,7 @@ export function Login({
                 placeholder="Your Name"
                 type="text"
                 id="password"
-                className="p-2 rounded border-[2px] outline-none border-[#49A8FF] py-2"
+                className="p-2 rounded border-[2px] outline-none border-gray-300 py-2"
                 onChange={(e) => {
                   setName(e.target.value);
                   setError("");
@@ -83,7 +83,7 @@ export function Login({
             type="email"
             id="email"
             autoComplete="email"
-            className="p-2 rounded border-[2px] outline-none border-[#49A8FF] py-2"
+            className="p-2 rounded border-[2px] outline-none border-gray-300 py-2"
             onChange={(e) => {
               setEmail(e.target.value);
               setError("");
@@ -101,7 +101,7 @@ export function Login({
             placeholder="Your Password"
             type="password"
             id="password"
-            className="p-2 rounded border-[2px] outline-none border-[#49A8FF] py-2"
+            className="p-2 rounded border-[2px] outline-none border-gray-300 py-2"
             onChange={(e) => {
               setPassword(e.target.value);
               setError("");

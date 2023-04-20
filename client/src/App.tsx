@@ -6,6 +6,7 @@ import { AppRouter } from "../../server";
 import { trpc } from "./utils/trpc";
 import React from "react";
 import Header from "./components/Header";
+import { Home } from "./components/Home";
 
 export type User = {
   name: string;
@@ -71,6 +72,9 @@ export function App() {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <Header />
+        <div className="max-w-7xl h-full w-full mx-auto">
+          <Home user={user} />
+        </div>
       </QueryClientProvider>
     </trpc.Provider>
   );
