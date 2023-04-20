@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, createTRPCProxyClient } from "@trpc/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Login } from "./components/Login";
 import { AppRouter } from "../../server";
 import { trpc } from "./utils/trpc";
@@ -41,6 +41,19 @@ export function App() {
     email: "",
     auth: false,
   });
+
+  useEffect(() => {
+    const userAlready = window.localStorage.getItem("user");
+
+    if (userAlready != null) {
+      const userAlreadySignUp: User = JSON.parse(userAlready);
+      setUser({
+        name: userAlreadySignUp.name,
+        email: userAlreadySignUp.email,
+        auth: userAlreadySignUp.auth,
+      });
+    }
+  }, []);
 
   if (!user.auth) {
     return (

@@ -141,6 +141,7 @@ export function Login({
                   auth: user.auth,
                 };
                 setUser(userLogin);
+                window.localStorage.setItem("user", JSON.stringify(userLogin));
               } else {
                 const user = await client.signup.mutate({
                   name,
@@ -159,6 +160,7 @@ export function Login({
                   auth: true,
                 };
                 setUser(userLogin);
+                window.localStorage.setItem("user", JSON.stringify(userLogin));
               }
             }}
           >

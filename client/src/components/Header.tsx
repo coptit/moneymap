@@ -1,4 +1,4 @@
-import { logo, wallet, split } from "../assets";
+import { logo, wallet, split, logout } from "../assets";
 import React from "react";
 
 const Header = () => {
@@ -14,6 +14,15 @@ const Header = () => {
           </a>
           <a className="hover:opacity-[50%]" href="/">
             <img src={wallet} alt="wallet" />
+          </a>
+          <a
+            onClick={() => {
+              window.localStorage.removeItem("user");
+            }}
+            className="hover:opacity-[50%]"
+            href="/"
+          >
+            <img src={logout} className="h-7" alt="wallet" />
           </a>
         </div>
       </div>
