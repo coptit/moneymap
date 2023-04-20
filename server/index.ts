@@ -41,7 +41,7 @@ const appRouter = router({
     .input(
       z.object({
         name: z.string().nonempty(),
-        email: z.string().email().nonempty(),
+        email: z.string().nonempty(),
         password: z.string().nonempty(),
       })
     )
@@ -50,16 +50,29 @@ const appRouter = router({
       const email = input.email;
       const password = input.password;
 
-      const user: User = await signup(name, email, password);
-      return {
-        user: user,
-      };
+      const [user, valid]: [User, boolean] = await signup(
+        name,
+        email,
+        password
+      );
+
+      if (!valid) {
+        return {
+          user: null,
+          valid: false,
+        };
+      } else {
+        return {
+          user: user,
+          valid: true,
+        };
+      }
     }),
 
   login: publicProcedure
     .input(
       z.object({
-        email: z.string().email().nonempty(),
+        email: z.string().nonempty(),
         password: z.string().nonempty(),
       })
     )

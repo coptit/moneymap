@@ -11,19 +11,30 @@ export async function signup(
   name: string,
   email: string,
   password: string
-): Promise<User> {
-  const user = await prisma.user.create({
-    data: {
-      name,
-      email,
-      password,
-    },
-  });
-  const userReturn: User = {
-    name: user.name,
-    email: user.email,
-  };
-  return userReturn;
+): Promise<[User, boolean]> {
+  try {
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password,
+      },
+    });
+    const userReturn: User = {
+      name: user.name,
+      email: user.email,
+    };
+    return [userReturn, true];
+  } catch (err) {
+    console.log(err);
+    return [
+      {
+        name: "",
+        email: "",
+      },
+      false,
+    ];
+  }
 }
 
 export async function login(

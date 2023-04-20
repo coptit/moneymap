@@ -5,6 +5,7 @@ import { Login } from "./components/Login";
 import { AppRouter } from "../../server";
 import { trpc } from "./utils/trpc";
 import React from "react";
+import Header from "./components/Header";
 
 export type User = {
   name: string;
@@ -56,7 +57,7 @@ export function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <h1>Hello, You are Logged in</h1>
+        <Header />
       </QueryClientProvider>
     </trpc.Provider>
   );

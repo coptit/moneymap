@@ -13,6 +13,7 @@ export function Login({
   const [mode, setMode] = useState(0);
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [error, setError] = useState("");
   const [continueButtonDisabled, setContinueButtonDisabled] = useState(true);
 
   return (
@@ -68,6 +69,7 @@ export function Login({
                 className="p-2 rounded border-[2px] outline-none border-[#49A8FF] py-2"
                 onChange={(e) => {
                   setName(e.target.value);
+                  setError("");
                 }}
               />
             </div>
@@ -84,6 +86,7 @@ export function Login({
             className="p-2 rounded border-[2px] outline-none border-[#49A8FF] py-2"
             onChange={(e) => {
               setEmail(e.target.value);
+              setError("");
 
               if (EmailValidator.validate(email)) {
                 setContinueButtonDisabled(false);
@@ -101,9 +104,17 @@ export function Login({
             className="p-2 rounded border-[2px] outline-none border-[#49A8FF] py-2"
             onChange={(e) => {
               setPassword(e.target.value);
+              setError("");
             }}
           />
 
+          <div
+            className={`bg-[#FA9884] text-center rounded p-2 m-2 ${
+              error === "" ? "hidden" : ""
+            }`}
+          >
+            {error}
+          </div>
           <button
             disabled={continueButtonDisabled}
             className="p-2 rounded-full mx-14 my-4 border-solid
@@ -118,6 +129,12 @@ export function Login({
                   email,
                   password,
                 });
+
+                if (!user.auth) {
+                  setError("Username or Password is Invalid");
+                  return;
+                }
+
                 const userLogin: User = {
                   name: user?.user?.name || "",
                   email: user?.user?.email || "",
@@ -130,6 +147,12 @@ export function Login({
                   email,
                   password,
                 });
+
+                if (!user.valid) {
+                  setError("Email already in use, try with different email");
+                  return;
+                }
+
                 const userLogin: User = {
                   name: user?.user?.name || "",
                   email: user?.user?.email || "",
@@ -137,15 +160,6 @@ export function Login({
                 };
                 setUser(userLogin);
               }
-
-              // const res = await client.auth.mutate({
-              //   email,
-              //   password,
-              // });
-
-              // if (res.auth) {
-              //   setAuth(true);
-              // }
             }}
           >
             {mode === 0 ? "Login" : "Sign UP"}
