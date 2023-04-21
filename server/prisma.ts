@@ -142,3 +142,28 @@ export async function addTransitions(
     return false;
   }
 }
+
+export async function getHistory(email: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user || user == undefined) {
+      return [];
+    }
+
+    const trans = await prisma.trans.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    return trans;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
