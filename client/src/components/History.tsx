@@ -68,6 +68,13 @@ export function History({
     }
   }
 
+  if (max_in === -99999999999) {
+    max_in = 0;
+  }
+  if (max_out === -99999999999) {
+    max_out = 0;
+  }
+
   setTotalIn(total_in);
   setTotalOut(total_out);
   setMaxIn(max_in);
