@@ -30,7 +30,7 @@ This repository is the project created during the hackathon.
 
 Team:
 
-
+![Image](https://tiddi.kunalsin9h.dev/gQpbdMG)
 
 [Kunal Singh](https://github.com/kunalsin9h)
 
