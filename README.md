@@ -33,6 +33,9 @@ Team:
 
 
 [Kunal Singh](https://github.com/kunalsin9h)
+
 [Anurag Kumar Yadav](https://github.com/anurag41682)
+
 [Srijan Soni](https://github.com/srijan0412)
+
 [Sudhakar Singh](https://github.com/naaam-h-siddhu)
