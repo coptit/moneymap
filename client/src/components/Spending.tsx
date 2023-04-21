@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { User } from "../App";
 import { client } from "../App";
-import { History } from "./History";
 import {
   Chart,
   LineController,
@@ -9,7 +8,11 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  PolarAreaController,
+  RadialLinearScale,
+  ArcElement,
 } from "chart.js";
+import { HistorySpending } from "./History";
 
 const months = [
   "Jan",
@@ -54,12 +57,12 @@ export function Spending({ user }: { user: User }) {
   const [maxSpend, setMaxSpend] = useState(0);
 
   useEffect(() => {
-    client.getHistory.query({ email: user.email }).then((res) => {
-      const prev = document.querySelector(".trx-graph");
+    client.getSpending.query({ email: user.email }).then((res) => {
+      const prev = document.querySelector(".trx-graph2");
       prev?.remove();
       const trxGraph = document.createElement("canvas");
-      trxGraph.classList.add("trx-graph");
-      const parentDiv = document.querySelector(".overview-abc");
+      trxGraph.classList.add("trx-graph2");
+      const parentDiv = document.querySelector(".overview-cde");
       parentDiv?.appendChild(trxGraph);
 
       Chart.register(LineController);
@@ -67,30 +70,62 @@ export function Spending({ user }: { user: User }) {
       Chart.register(LinearScale);
       Chart.register(PointElement);
       Chart.register(LineElement);
+      Chart.register(PolarAreaController);
+      Chart.register(RadialLinearScale);
+      Chart.register(ArcElement);
 
-      const arr = res.trans;
-      arr.reverse();
+      const arr = res.items;
+      type item_type = typeof arr[0];
 
       const labels: string[] = [];
       const amounts: number[] = [];
-      for (const trx of arr) {
-        const date = new Date(trx.time);
-        labels.push(`${date.getDate()}, ${months[date.getMonth()]}`);
-        amounts.push(trx.amount);
+
+      console.log(arr);
+
+      arr.sort((a: item_type, b: item_type) => {
+        if (a >= b) return +1;
+        else return -1;
+      });
+
+      console.log(arr);
+
+      let i = 0;
+      for (const item of arr) {
+        labels.push(item.name);
+        amounts.push(item.amount);
+        i++;
+        if (i >= 5) break;
       }
 
       new Chart(trxGraph as HTMLCanvasElement, {
-        type: "line",
+        type: "polarArea",
         data: {
           labels: labels,
           datasets: [
             {
-              label: "Received",
+              label: "Top 5 Bought Items",
               data: amounts,
-              borderColor: "green",
-              // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(75, 192, 192)",
+                "rgb(255, 205, 86)",
+                "rgb(201, 203, 207)",
+                "rgb(54, 162, 235)",
+              ],
             },
           ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Top 5 Expense",
+            },
+          },
+          scales: {
+            x: {},
+          },
         },
       });
     });
@@ -100,7 +135,7 @@ export function Spending({ user }: { user: User }) {
     <>
       <div className="text-1xl font-bold">Spending Overview</div>
       <div className="flex justify-between">
-        <div className="overview-abc">
+        <div className="overview-cde">
           <div className="flex flex-wrap">
             <Overview title="Total Spend" value={totalSpend} pos={true} />
             <Overview title="Max Spend" value={maxSpend} pos={true} />
@@ -108,6 +143,11 @@ export function Spending({ user }: { user: User }) {
         </div>
         <div className="p-5 w-[50%] h-[400px] overflow-scroll">
           <span className="font-bold">History</span>
+          <HistorySpending
+            user={user}
+            setTotalSpend={setTotalSpend}
+            setMaxSpend={setMaxSpend}
+          />
         </div>
       </div>
     </>

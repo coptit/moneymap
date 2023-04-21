@@ -103,7 +103,7 @@ export async function addSpending(
   }
 }
 
-export async function addTransitions(
+export async function addtransactions(
   email: string,
   type: string,
   from: string,
@@ -162,6 +162,31 @@ export async function getHistory(email: string) {
     });
 
     return trans;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
+export async function getSpending(email: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user || user == undefined) {
+      return [];
+    }
+
+    const items = await prisma.item.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    return items;
   } catch (error) {
     console.log(error);
     return [];
