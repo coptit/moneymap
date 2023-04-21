@@ -11,8 +11,9 @@ import {
   signup,
   User,
   addSpending,
-  addTransitions,
+  addtransactions,
   getHistory,
+  getSpending,
 } from "./prisma";
 
 const t = initTRPC.create();
@@ -132,7 +133,7 @@ const appRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const res = await addTransitions(
+      const res = await addtransactions(
         input.email,
         input.type,
         input.from,
@@ -155,6 +156,19 @@ const appRouter = router({
       trans.reverse();
       return {
         trans,
+      };
+    }),
+  getSpending: publicProcedure
+    .input(
+      z.object({
+        email: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const items = await getSpending(input.email);
+      items.reverse();
+      return {
+        items,
       };
     }),
 });

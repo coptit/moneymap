@@ -7,6 +7,7 @@ import { trpc } from "./utils/trpc";
 import React from "react";
 import Header from "./components/Header";
 import { Home } from "./components/Home";
+import { Spending } from "./components/Spending";
 
 export type User = {
   name: string;
@@ -74,6 +75,7 @@ export function App() {
         <Header />
         <div className="max-w-7xl h-full w-full mx-auto">
           <Home user={user} />
+          <Spending user={user} />
         </div>
       </QueryClientProvider>
     </trpc.Provider>
