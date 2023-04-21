@@ -14,21 +14,6 @@ import {
 } from "chart.js";
 import { HistorySpending } from "./History";
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sept",
-  "Oct",
-  "Nov",
-  "Dev",
-];
-
 function Overview({
   title,
   value,
