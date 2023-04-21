@@ -117,7 +117,7 @@ export function HistorySpending({
 
   for (const trx of items.data.items) {
     total_spend += trx.amount;
-    max_spend += Math.max(max_spend, trx.amount);
+    max_spend = Math.max(max_spend, trx.amount);
   }
 
   setTotalSpend(total_spend);
