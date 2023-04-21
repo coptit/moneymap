@@ -39,3 +39,5 @@ Team:
 [Srijan Soni](https://github.com/srijan0412)
 
 [Sudhakar Singh](https://github.com/naaam-h-siddhu)
+
+[Amey Paliwal](https://linkedin.com/in/amey-paliwal-b6a0b9257)
