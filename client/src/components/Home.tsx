@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { User } from "../App";
 import { client } from "../App";
+import { History } from "./History";
 
 function getFirstName(name: string): string {
   const names = name.split(" ");
@@ -250,6 +251,10 @@ function Overview({
 export function Home({ user }: { user: User }) {
   const [tModal, setTModal] = useState(false);
   const [sModal, setSModal] = useState(false);
+  const [totalIn, setTotalIn] = useState(0);
+  const [totalOut, setTotalOut] = useState(0);
+  const [maxIn, setMaxIn] = useState(0);
+  const [maxOut, setMaxOut] = useState(0);
 
   return (
     <div>
@@ -284,14 +289,23 @@ export function Home({ user }: { user: User }) {
       <div className="flex justify-between">
         <div>
           <div className="flex flex-wrap">
-            <Overview title="Total In" value={100} pos={true} />
-            <Overview title="Total Out" value={40} pos={false} />
-            <Overview title="Max In" value={10} pos={true} />
-            <Overview title="Max Out" value={5} pos={false} />
+            <Overview title="Total In" value={totalIn} pos={true} />
+            <Overview title="Total Out" value={totalOut} pos={false} />
+            <Overview title="Max In" value={maxIn} pos={true} />
+            <Overview title="Max Out" value={maxOut} pos={false} />
           </div>
           <div>Graph</div>
         </div>
-        <div>History</div>
+        <div className="p-5 w-[50%] h-[400px] overflow-scroll">
+          <span className="font-bold">History</span>
+          <History
+            user={user}
+            setTotalIn={setTotalIn}
+            setTotalOut={setTotalOut}
+            setMaxIn={setMaxIn}
+            setMaxOut={setMaxOut}
+          />
+        </div>
       </div>
       {tModal && <TransModal setTModal={setTModal} user={user} />}
       {sModal && <SpendingModal setSModal={setSModal} user={user} />}

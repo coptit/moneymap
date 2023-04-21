@@ -6,7 +6,14 @@ import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import cors from "cors";
 import { z } from "zod";
 import sendMail, { mailMeta } from "./sendMail";
-import { login, signup, User, addSpending, addTransitions } from "./prisma";
+import {
+  login,
+  signup,
+  User,
+  addSpending,
+  addTransitions,
+  getHistory,
+} from "./prisma";
 
 const t = initTRPC.create();
 
@@ -135,6 +142,19 @@ const appRouter = router({
       );
       return {
         res,
+      };
+    }),
+  getHistory: publicProcedure
+    .input(
+      z.object({
+        email: z.string().nonempty(),
+      })
+    )
+    .query(async ({ input }) => {
+      const trans = await getHistory(input.email);
+      trans.reverse();
+      return {
+        trans,
       };
     }),
 });
