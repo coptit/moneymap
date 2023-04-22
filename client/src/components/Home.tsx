@@ -339,7 +339,7 @@ export function Home({ user }: { user: User }) {
             }}
           >
             {" "}
-            &#43; transactions
+            &#43; Transactions
           </button>
           <button
             className="bg-[#F6BA6F] rounded p-2 my-3 mx-4  hover:bg-[#FFA559]"
@@ -353,7 +353,7 @@ export function Home({ user }: { user: User }) {
           </button>
         </div>
       </div>
-      <div className="text-1xl font-bold">transactions Overview</div>
+      <div className="text-1xl font-bold">Transactions Overview</div>
       <div className="flex justify-between">
         <div className="overview-abc">
           <div className="flex flex-wrap">

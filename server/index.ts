@@ -1,17 +1,13 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import { initTRPC } from "@trpc/server";
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import cors from "cors";
 import { z } from "zod";
-import sendMail, { mailMeta } from "./sendMail";
 import {
   login,
   signup,
   User,
   addSpending,
-  addtransactions,
+  addTransactions,
   getHistory,
   getSpending,
 } from "./prisma";
@@ -22,28 +18,6 @@ const publicProcedure = t.procedure;
 const router = t.router;
 
 const appRouter = router({
-  sendMail: publicProcedure
-    .input(
-      z.object({
-        emails: z.array(z.string()),
-        subject: z.string().nonempty(),
-        text: z.string().nullish(),
-        html: z.string().nullish(),
-      })
-    )
-    .mutation(async ({ input }) => {
-      for (const email of input.emails) {
-        const mailData: mailMeta = {
-          to: email,
-          subject: input.subject,
-          text: input.text ?? "",
-          html: input.html ?? "",
-        };
-
-        await sendMail(mailData);
-      }
-    }),
-
   signup: publicProcedure
     .input(
       z.object({
@@ -133,7 +107,7 @@ const appRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const res = await addtransactions(
+      const res = await addTransactions(
         input.email,
         input.type,
         input.from,

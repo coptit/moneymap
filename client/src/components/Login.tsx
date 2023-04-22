@@ -164,7 +164,7 @@ export function Login({
               }
             }}
           >
-            {mode === 0 ? "Login" : "Sign UP"}
+            {mode === 0 ? "Login" : "Sign Up"}
           </button>
         </div>
       </div>
