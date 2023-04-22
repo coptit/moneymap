@@ -5,6 +5,7 @@ COPY . .
 RUN npm ci
 RUN cd server
 RUN npx prisma migrate dev --name init
+RUN cd ../
 RUN npm run build
 
 EXPOSE 4000
