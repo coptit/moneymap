@@ -24,6 +24,9 @@ cd server
 # Create a SQLite3 Database with [Prisma](https://prisma.io)
 npx prisma migrate dev --name init
 
+# Move back to the root directory
+cd ../
+
 # Run Backend + Frontend Simultaneously
 npm run dev
 ```
@@ -53,3 +56,7 @@ Team:
 [Sudhakar Singh](https://github.com/naaam-h-siddhu)
 
 [Amey Paliwal](https://linkedin.com/in/amey-paliwal-b6a0b9257)
+
+### Demo
+
+![Dashboard](https://tiddi.kunalsin9h.dev/NutBsRB)

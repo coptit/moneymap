@@ -16,7 +16,6 @@ export type User = {
 };
 
 const backendURL = "http://localhost:4001";
-// const backendURL = "https://capb.hop.sh";
 
 export const client = createTRPCProxyClient<AppRouter>({
   links: [

@@ -103,7 +103,7 @@ export async function addSpending(
   }
 }
 
-export async function addtransactions(
+export async function addTransactions(
   email: string,
   type: string,
   from: string,
