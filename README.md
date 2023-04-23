@@ -31,6 +31,15 @@ cd ../
 npm run dev
 ```
 
+### or Run with Docker
+
+```bash
+sudo docker run -it --rm -p 4000:4000 -p 4001:4001 ghcr.io/coptit/moneymap:latest
+```
+
+> Here Frontend will run on `4000` and Backend will run on `4001`
+
+
 #### Frontend is build with `React` + `Vite` + `Tailwind CSS` + `Typescript`
 
 #### Backend is build with `tRPC` + `Prisma` + `SQLite3` + `Typescript`
