@@ -68,4 +68,4 @@ Team:
 
 ### Demo
 
-![demo-image](https://tiddi.kunalsin9h.dev/vDNMcxC)
+![demo-image](https://tiddi.kunalsin9h.dev/pjfom2e)
