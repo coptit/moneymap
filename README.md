@@ -54,7 +54,7 @@ This repository is the project created during the hackathon.
 
 Team:
 
-![Image](https://tiddi.kunalsin9h.dev/gQpbdMG)
+![team-image](https://tiddi.kunalsin9h.dev/L1OUVMI)
 
 [Kunal Singh](https://github.com/kunalsin9h)
 
@@ -68,4 +68,4 @@ Team:
 
 ### Demo
 
-![Dashboard](https://tiddi.kunalsin9h.dev/NutBsRB)
+![demo-image](https://tiddi.kunalsin9h.dev/pjfom2e)
